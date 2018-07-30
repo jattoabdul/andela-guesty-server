@@ -1,6 +1,6 @@
 from .base_controller import BaseController, make_response
 from app.repositories import GuestRepo
-from app.utils import slackhelper, timestring_to_datetime
+from app.utils import timestring_to_datetime
 from threading import Thread
 import requests
 import json
@@ -15,7 +15,7 @@ class BotController(BaseController):
 		self.guest_repo = GuestRepo()
 		
 		if self.request_slack_id is not None:
-			self.slack_user_info = slackhelper.user_info(self.request_slack_id)
+			self.slack_user_info = self.slackhelper.user_info(self.request_slack_id)
 		
 		self.dialog_element = [
 			{
@@ -64,14 +64,14 @@ class BotController(BaseController):
 			"notify_on_cancel": True,
 			"elements": self.dialog_element
 		}
-		slackhelper.dialog(dialog=dialog, trigger_id=self.message_trigger)
+		self.slackhelper.dialog(dialog=dialog, trigger_id=self.message_trigger)
 		
 	def interaction(self):
 		request_payload = json.loads(self.request.data.get('payload'))
 		webhook_url = request_payload["response_url"]
 		slack_id = request_payload['user']['id']
 		
-		slack_user_info = slackhelper.user_info(slack_id)
+		slack_user_info = self.slackhelper.user_info(slack_id)
 		user_data = slack_user_info['user']
 		
 		if request_payload['type'] == "dialog_submission":

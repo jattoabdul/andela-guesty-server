@@ -1,11 +1,12 @@
 from flask import jsonify, make_response
-from app.utils import datetime
+from app.utils import datetime, slackhelper
 
 
 class BaseController:
 	
 	def __init__(self, request):
 		self.request = request
+		self.slackhelper = slackhelper
 	
 	def handle_response(self, msg='OK', payload=None, status_code=200, slack_response=None):
 		
