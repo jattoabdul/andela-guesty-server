@@ -69,5 +69,5 @@ class GuestController(BaseController):
 			if beep:
 				pass
 			
-			payload = {'id': guest.id, 'guest_name': guest.guest_name, 'host_name': guest.host_name, 'host_email': guest.host_email, 'purpose': guest.purpose, 'time_in': time_format_12_24(guest.time_in), 'time_out': time_format_12_24(guest.time_out), 'tag_no': guest.tag_no}
+			payload = {'id': guest.id, 'guest_name': guest.guest_name, 'host_name': guest.host_name, 'host_email': guest.host_email, 'purpose': guest.purpose, 'time_in': time_format_12_24(guest.time_in), 'time_out': time_format_12_24(guest.time_out), 'tag_no': guest.tag_no, 'timestamps': self.prettify_response_dates(created_at=guest.created_at, updated_at=guest.updated_at)}
 			return self.handle_response(msg='OK', payload=payload)
