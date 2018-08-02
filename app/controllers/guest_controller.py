@@ -67,8 +67,8 @@ class GuestController(BaseController):
 			guest.save()
 			
 			if beep:
-				msg = 'Psst! your guest ({}) is at the 4th Floor reception.'.format(guest.name)
-				self.slackhelper.post_message(msg=msg, recipient=guest.host_slackid)
+				msg = 'Psst! your guest ({}) is at the 4th floor reception.'.format(guest.guest_name)
+				print(self.slackhelper.post_message(msg=msg, recipient=guest.host_slackid))
 			
 			payload = {'id': guest.id, 'guest_name': guest.guest_name, 'host_name': guest.host_name, 'host_email': guest.host_email, 'purpose': guest.purpose, 'time_in': time_format_12_24(guest.time_in), 'time_out': time_format_12_24(guest.time_out), 'tag_no': guest.tag_no, 'timestamps': self.prettify_response_dates(created_at=guest.created_at, updated_at=guest.updated_at)}
 			return self.handle_response(msg='OK', payload=payload)
