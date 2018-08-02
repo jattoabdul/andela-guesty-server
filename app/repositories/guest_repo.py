@@ -24,7 +24,7 @@ class GuestRepo:
 		if host_email:
 			return Guest.query.filter_by(host_email=host_email).order_by(Guest.created_at.desc()).paginate(error_out=False)
 		else:
-			return Guest.query.paginate(error_out=False)
+			return Guest.query.order_by(Guest.created_at.desc()).paginate(error_out=False)
 	
 	@staticmethod
 	def new_guest(guest_name, host_name, host_email, host_slackid, purpose, time_in, time_out=None, tag_no=None):
