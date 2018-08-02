@@ -37,7 +37,7 @@ class GuestController(BaseController):
 			
 			guest = self.repo.new_guest(guest_name=guest_name, host_name=host_name, host_email=host_email, host_slackid=host_slackid, purpose=purpose, time_in=time_in, time_out=time_out, tag_no=tag_no)
 			if guest:
-				payload = {'id': guest.id, 'guest_name': guest.guest_name, 'host_name': guest.host_name, 'host_email': guest.host_email, 'purpose': guest.purpose, 'time_in': time_format_12_24(guest.time_in), 'time_out': time_format_12_24(guest.time_out), 'tag_no': guest.tag_no}
+				payload = {'id': guest.id, 'guest_name': guest.guest_name, 'host_name': guest.host_name, 'host_email': guest.host_email, 'purpose': guest.purpose, 'time_in': time_format_12_24(guest.time_in), 'time_out': time_format_12_24(guest.time_out), 'tag_no': guest.tag_no, 'timestamps': self.prettify_response_dates(created_at=guest.created_at, updated_at=guest.updated_at)}
 				return self.handle_response(msg='OK', payload=payload)
 			else:
 				return self.handle_response(msg='Application Error', status_code=500)
