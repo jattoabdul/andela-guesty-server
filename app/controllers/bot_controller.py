@@ -19,10 +19,33 @@ class BotController(BaseController):
 		
 		self.dialog_element = [
 			{
-				"label": "Guest Name",
+				"label": "Guest Type",
+				"type": "select",
+				"name": "guest_type",
+				"value": "individual",
+				"options": [
+					{
+						"label": "Individual",
+						"value": "individual"
+					},
+					{
+						"label": "Group",
+						"value": "group"
+					},
+				]
+			},
+			{
+				"label": "Person or Group Name",
 				"type": "text",
 				"name": "guest_name",
 				"placeholder": "Person McAwesome",
+			},
+			{
+				"label": "Group Size",
+				"type": "text",
+				"name": "guest_name",
+				"placeholder": "",
+				"hint": "Optional - Required if guest type is group",
 			},
 			{
 				"label": "Purpose of Visit",
@@ -40,11 +63,24 @@ class BotController(BaseController):
 				]
 			},
 			{
-				"label": "Expected Arrival Time",
+				"label": "Expected Time In",
 				"type": "text",
 				"name": "time_in",
 				"placeholder": "eg 08:00, 15:33",
-				"hint": "What time today is your guest coming in? - 12hr or 24hr format WITHOUT AM or PM.",
+				"hint": "What time is your guest coming in? - 24hr format WITHOUT AM or PM.",
+			},
+			{
+				"label": "Estimated Time Out",
+				"type": "text",
+				"name": "time_out",
+				"placeholder": "eg 08:00, 15:33",
+				"hint": "24hr format WITHOUT AM or PM.",
+			},
+			{
+				"label": "Remarks",
+				"type": "text",
+				"name": "remarks",
+				"placeholder": "Optional",
 			},
 		]
 		
