@@ -19,22 +19,6 @@ class BotController(BaseController):
 		
 		self.dialog_element = [
 			{
-				"label": "Guest Type",
-				"type": "select",
-				"name": "guest_type",
-				"value": "individual",
-				"options": [
-					{
-						"label": "Individual",
-						"value": "individual"
-					},
-					{
-						"label": "Group",
-						"value": "group"
-					},
-				]
-			},
-			{
 				"label": "Person or Group Name",
 				"type": "text",
 				"name": "guest_name",
@@ -43,9 +27,10 @@ class BotController(BaseController):
 			{
 				"label": "Group Size",
 				"type": "text",
-				"name": "guest_name",
+				"name": "group_size",
 				"placeholder": "",
-				"hint": "Optional - Required if guest type is group",
+				"value": "1",
+				"hint": "Number of guests expected. Defaults to 1",
 			},
 			{
 				"label": "Purpose of Visit",
@@ -75,13 +60,7 @@ class BotController(BaseController):
 				"name": "time_out",
 				"placeholder": "eg 08:00, 15:33",
 				"hint": "24hr format WITHOUT AM or PM.",
-			},
-			{
-				"label": "Remarks",
-				"type": "text",
-				"name": "remarks",
-				"placeholder": "Optional",
-			},
+			}
 		]
 		
 	def handle(self):
@@ -115,17 +94,28 @@ class BotController(BaseController):
 			guest_name = request_payload['submission']['guest_name']
 			purpose = request_payload['submission']['purpose']
 			time_in = timestring_to_datetime(request_payload['submission']['time_in'])
+			time_out = timestring_to_datetime(request_payload['submission']['time_out'])
+			group_size = request_payload['submission']['group_size']
 	
 			if time_in is None:
 				return self.handle_response(slack_response={'errors': [{'name': 'time_in', 'error': 'Invalid Time Format Supplied'}]})
 			
-			self.guest_repo.new_guest(guest_name=guest_name, host_name=user_data['real_name'], host_email=user_data['profile']['email'], host_slackid=slack_id, purpose=purpose, time_in=time_in)
+			if time_out is None:
+				return self.handle_response(slack_response={'errors': [{'name': 'time_out', 'error': 'Invalid Time Format Supplied'}]})
+			
+			if time_out.time() <= time_in.time():
+				return self.handle_response(slack_response={'errors': [{'name': 'time_out', 'error': 'Time out must be ahead of Time in'}]})
+			
+			if int(group_size) < 1:
+				return self.handle_response(slack_response={'errors': [{'name': 'group_size', 'error': 'Invalid Guest Size Supplied'}]})
+			
+			r = self.guest_repo.new_guest(guest_name=guest_name, host_name=user_data['real_name'], host_email=user_data['profile']['email'], host_slackid=slack_id, purpose=purpose, time_in=time_in, group_size=group_size)
 			slack_data = {'text': "I've added {} to your guest list. I'd notify you when they get to the reception.".format(guest_name)}
 			requests.post(webhook_url, data=json.dumps(slack_data), headers={'Content-Type': 'application/json'})
 			
-			return make_response('', 200)
-
 		elif request_payload['type'] == 'dialog_cancellation':
 			slack_data = {'text': "Cool! - I've canceled the process."}
 			requests.post(webhook_url, data=json.dumps(slack_data), headers={'Content-Type': 'application/json'})
+		
+		return make_response('', 200)
 

@@ -39,4 +39,3 @@ class SlackHelper:
 	
 	def find_by_email(self, email):
 		return self.slack_client.api_call("users.lookupByEmail", email=email)
-

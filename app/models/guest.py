@@ -13,8 +13,10 @@ class Guest(BaseModel):
 	time_in = db.Column(db.DateTime(), nullable=False)
 	time_out = db.Column(db.DateTime(), nullable=True)
 	tag_no = db.Column(db.String(50), nullable=True)
+	group_size = db.Column(db.Integer(), default=1, nullable=True)
+	submit_tag = db.Column(db.Integer(), default=0, nullable=True)
 	
-	def __init__(self, guest_name, host_name, host_email, host_slackid, purpose, time_in, time_out=None, tag_no=None):
+	def __init__(self, guest_name, host_name, host_email, host_slackid, purpose, time_in, time_out=None, tag_no=None, group_size=1):
 		self.guest_name = guest_name
 		self.host_name = host_name
 		self.host_email = host_email
@@ -23,3 +25,4 @@ class Guest(BaseModel):
 		self.time_in = time_in
 		self.time_out = time_out
 		self.tag_no = tag_no
+		self.group_size = group_size
