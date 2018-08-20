@@ -14,9 +14,9 @@ class GuestController(BaseController):
 		guests = self.repo.list_guests(host_email=host_email)
 		guest_list = [{
 			'id': guest.id, 'guest_name': guest.guest_name, 'host_name': guest.host_name, 'host_email': guest.host_email,
-			'purpose': guest.purpose, 'time_in': time_format_12_24(guest.time_in), 'time_out': time_format_12_24(guest.time_out),
-			'tag_no': guest.tag_no, 'group_size': guest.group_size, 'submit_tag': bool(guest.submit_tag),
-			'timestamps': self.prettify_response_dates(created_at=guest.created_at, updated_at=guest.updated_at)
+			'purpose': guest.purpose, 'location': guest.location, 'time_in': time_format_12_24(guest.time_in),
+			'time_out': time_format_12_24(guest.time_out), 'tag_no': guest.tag_no, 'group_size': guest.group_size,
+			'submit_tag': bool(guest.submit_tag), 'timestamps': self.prettify_response_dates(created_at=guest.created_at, updated_at=guest.updated_at)
 		} for guest in guests.items]
 		
 		return self.handle_response(msg='OK', payload={'guests': guest_list, 'meta': self.pagination_meta(guests)})
@@ -42,12 +42,22 @@ class GuestController(BaseController):
 			time_in = timestring_to_datetime(time_in)
 			time_out = timestring_to_datetime(time_out) if time_out is not None else None
 			
-			guest = self.repo.new_guest(guest_name=guest_name, host_name=host_name, host_email=host_email, host_slackid=host_slackid, purpose=purpose, time_in=time_in, time_out=time_out, tag_no=tag_no, group_size=group_size)
+			guest = self.repo.new_guest(
+				guest_name=guest_name,
+				host_name=host_name,
+				host_email=host_email,
+				host_slackid=host_slackid,
+				purpose=purpose,
+				time_in=time_in,
+				time_out=time_out,
+				tag_no=tag_no,
+				group_size=group_size)
 			if guest:
 				payload = {
 					'id': guest.id, 'guest_name': guest.guest_name, 'host_name': guest.host_name, 'host_email': guest.host_email,
-					'purpose': guest.purpose, 'time_in': time_format_12_24(guest.time_in), 'time_out': time_format_12_24(guest.time_out),
-					'tag_no': guest.tag_no, 'group_size': guest.group_size, 'submit_tag': bool(guest.submit_tag),
+					'purpose': guest.purpose, 'location': guest.location, 'time_in': time_format_12_24(guest.time_in),
+					'time_out': time_format_12_24(guest.time_out), 'tag_no': guest.tag_no, 'group_size': guest.group_size,
+					'submit_tag': bool(guest.submit_tag),
 					'timestamps': self.prettify_response_dates(created_at=guest.created_at, updated_at=guest.updated_at)
 				}
 				return self.handle_response(msg='OK', payload=payload)
@@ -91,7 +101,8 @@ class GuestController(BaseController):
 			
 			payload = {
 				'id': guest.id, 'guest_name': guest.guest_name, 'host_name': guest.host_name, 'host_email': guest.host_email,
-				'purpose': guest.purpose, 'time_in': time_format_12_24(guest.time_in), 'time_out': time_format_12_24(guest.time_out),
-				'tag_no': guest.tag_no, 'group_size': guest.group_size, 'submit_tag': bool(guest.submit_tag),
+				'purpose': guest.purpose, 'location': guest.location, 'time_in': time_format_12_24(guest.time_in),
+				'time_out': time_format_12_24(guest.time_out), 'tag_no': guest.tag_no, 'group_size': guest.group_size,
+				'submit_tag': bool(guest.submit_tag),
 				'timestamps': self.prettify_response_dates(created_at=guest.created_at, updated_at=guest.updated_at)}
 			return self.handle_response(msg='OK', payload=payload)
