@@ -30,3 +30,5 @@ def time_format_12_24(datetime_obj):
 	else:
 		meridian = 'AM' if int(datetime_obj.strftime('%H')) <= 11 else 'PM'
 		return {'format_12': '{}{}'.format(datetime_obj.strftime('%b %d, %Y %I:%M'), meridian), 'format_24': datetime_obj.strftime('%b %d, %Y %H:%M')}
+	
+		

@@ -63,26 +63,70 @@ class BotController(BaseController):
 			}
 		]
 		
+		self.location_buttons = [
+				{
+					"text": "Select Location",
+					"callback_id": "host_location",
+					"color": "#3AA3E3",
+					"attachment_type": "default",
+					"actions": [
+						{
+							"name": "location",
+							"text": "Lagos",
+							"type": "button",
+							"value": 'lagos',
+							"style": "primary",
+						},
+						{
+							"name": "location",
+							"text": "Nairobi",
+							"type": "button",
+							"value": "nairobi"
+						},
+						{
+							"name": "location",
+							"text": "Kampala",
+							"type": "button",
+							"value": "kampala"
+						},
+						{
+							"name": "location",
+							"text": "New York",
+							"type": "button",
+							"value": "new-york"
+						},
+						{
+							"name": "location",
+							"text": "Kigali",
+							"type": "button",
+							"value": "kigali"
+						},
+					]
+				}
+			]
+		
 	def handle(self):
-		# Switch To Backgroud Thread To Avoid Slack Timeout
-		
-		thr = Thread(target=self.create_dialog)
-		thr.start()
-		
-		return self.handle_response(slack_response={'text': 'Registering Your Guest - Please Wait'})
+		# Prompt User to Select Location
+		return self.handle_response(slack_response={'text': '', 'attachments': self.location_buttons})
 	
-	def create_dialog(self):
+	def create_dialog(self, location, trigger_id):
 		dialog = {
 			"title": "Register Guest",
 			"submit_label": "Register",
-			"callback_id": "register_guest",
+			"callback_id": "register_guest_{}".format(location),
 			"notify_on_cancel": True,
 			"elements": self.dialog_element
 		}
-		self.slackhelper.dialog(dialog=dialog, trigger_id=self.message_trigger)
+		return self.slackhelper.dialog(dialog=dialog, trigger_id=trigger_id)
+	
+	def prompt_location(self):
+		self.slackhelper.post_message(msg='Open the guesty app', recipient=self.request_slack_id, attachments=self.location_buttons)
 		
 	def interaction(self):
 		request_payload = json.loads(self.request.data.get('payload'))
+		
+		print(request_payload)
+		
 		webhook_url = request_payload["response_url"]
 		slack_id = request_payload['user']['id']
 		
@@ -96,6 +140,7 @@ class BotController(BaseController):
 			time_in = timestring_to_datetime(request_payload['submission']['time_in'])
 			time_out = timestring_to_datetime(request_payload['submission']['time_out'])
 			group_size = request_payload['submission']['group_size']
+			location = request_payload['callback_id'].split('_')[2]
 	
 			if time_in is None:
 				return self.handle_response(slack_response={'errors': [{'name': 'time_in', 'error': 'Invalid Time Format Supplied'}]})
@@ -109,9 +154,25 @@ class BotController(BaseController):
 			if int(group_size) < 1:
 				return self.handle_response(slack_response={'errors': [{'name': 'group_size', 'error': 'Invalid Guest Size Supplied'}]})
 			
-			r = self.guest_repo.new_guest(guest_name=guest_name, host_name=user_data['real_name'], host_email=user_data['profile']['email'], host_slackid=slack_id, purpose=purpose, time_in=time_in, group_size=group_size)
+			r = self.guest_repo.new_guest(
+				guest_name=guest_name,
+				host_name=user_data['real_name'],
+				host_email=user_data['profile']['email'],
+				host_slackid=slack_id,
+				purpose=purpose,
+				location=location,
+				time_in=time_in,
+				time_out=time_out,
+				group_size=group_size)
+			
 			slack_data = {'text': "I've added {} to your guest list. I'd notify you when they get to the reception.".format(guest_name)}
 			requests.post(webhook_url, data=json.dumps(slack_data), headers={'Content-Type': 'application/json'})
+		
+		if request_payload['type'] == "interactive_message" and request_payload['callback_id'] == 'host_location':
+			payload_action_name = request_payload['actions'][0]['name']
+			payload_action_value = request_payload['actions'][0]['value']
+			self.create_dialog(location=payload_action_value, trigger_id=request_payload['trigger_id'])
+			return self.handle_response(slack_response={'text': 'Adding Your Guest To {} Guest Book'.format(payload_action_value)})
 			
 		elif request_payload['type'] == 'dialog_cancellation':
 			slack_data = {'text': "Cool! - I've canceled the process."}

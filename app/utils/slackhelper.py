@@ -8,13 +8,13 @@ class SlackHelper:
 		self.slack_token = get_env('SLACK_TOKEN')
 		self.slack_client = SlackClient(self.slack_token)
 
-	def post_message(self, msg, recipient, attachments=None):
+	def post_message(self, msg, recipient, attachments=None, as_user=True):
 		return self.slack_client.api_call(
 			"chat.postMessage",
 			channel=recipient,
 			text=msg,
 			attachments=attachments,
-			as_user=True
+			as_user=as_user
 		)
 
 	def update_message(self, msg, recipient, message_ts=None, attachments=None):

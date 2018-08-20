@@ -27,7 +27,9 @@ class GuestRepo:
 			return Guest.query.order_by(Guest.created_at.desc()).paginate(error_out=False)
 	
 	@staticmethod
-	def new_guest(guest_name, host_name, host_email, host_slackid, purpose, time_in, time_out=None, tag_no=None, group_size=1):
-		guest = Guest(guest_name=guest_name, host_name=host_name, host_email=host_email, host_slackid=host_slackid, purpose=purpose, time_in=time_in, time_out=time_out, tag_no=tag_no, group_size=group_size)
+	def new_guest(guest_name, host_name, host_email, host_slackid, purpose, location, time_in, time_out=None, tag_no=None, group_size=1):
+		guest = Guest(
+			guest_name=guest_name, host_name=host_name, host_email=host_email, host_slackid=host_slackid, purpose=purpose,
+			location=location, time_in=time_in, time_out=time_out, tag_no=tag_no, group_size=group_size)
 		guest.save()
 		return guest
