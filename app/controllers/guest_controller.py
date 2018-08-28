@@ -28,6 +28,7 @@ class GuestController(BaseController):
 		time_in = self.request.data.get('time_in')
 		time_out = self.request.data.get('time_out')
 		tag_no = self.request.data.get('tag_no')
+		location = self.request.data.get('location')
 		group_size = self.request.data.get('group_size')
 		group_size = 1 if group_size is None else group_size
 		
@@ -48,6 +49,7 @@ class GuestController(BaseController):
 				host_email=host_email,
 				host_slackid=host_slackid,
 				purpose=purpose,
+				location=location,
 				time_in=time_in,
 				time_out=time_out,
 				tag_no=tag_no,
