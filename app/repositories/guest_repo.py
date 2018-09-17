@@ -22,7 +22,7 @@ class GuestRepo:
 	@staticmethod
 	def list_guests(host_email=None):
 		if host_email:
-			return Guest.query.filter_by(host_email=host_email).order_by(Guest.created_at.desc()).paginate(error_out=False)
+			return Guest.query.filter_by(host_email=host_email).order_by(Guest.created_at.desc()).paginate(error_out=False, per_page=50)
 		else:
 			return Guest.query.order_by(Guest.created_at.desc()).paginate(error_out=False)
 	
