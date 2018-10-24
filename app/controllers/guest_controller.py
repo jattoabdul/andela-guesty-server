@@ -85,7 +85,7 @@ class GuestController(BaseController):
 				guest.tag_no = tag_no
 				
 				if beep.lower() == 'true':
-					msg = 'Psst! your guest ({}) is at the 4th floor reception.'.format(guest.guest_name)
+					msg = 'Psst! your guest ({}) has arrived the visitors waiting area.'.format(guest.guest_name)
 					self.slackhelper.post_message(msg=msg, recipient=guest.host_slackid)
 				
 			if field == 'time-out':
