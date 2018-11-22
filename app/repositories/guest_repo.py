@@ -16,8 +16,10 @@ class GuestRepo:
 		return Guest.query.filter_by(host_email=host_email).paginate(error_out=False)
 	
 	@staticmethod
-	def all():
-		return Guest.query.paginate(error_out=False)
+	def all(paginate=True):
+		if paginate:
+			return Guest.query.paginate(error_out=False)
+		return Guest.query.all()
 	
 	@staticmethod
 	def list_guests(host_email=None):

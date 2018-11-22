@@ -26,7 +26,7 @@ def prettify_datetime(datetime_obj):
 	
 def time_format_12_24(datetime_obj):
 	if datetime_obj is None:
-		return {'default': None, 'date_pretty_short': None, 'date_pretty': None}
+		return {'default': None, 'format_12': None, 'format_24': None}
 	else:
 		meridian = 'AM' if int(datetime_obj.strftime('%H')) <= 11 else 'PM'
 		return {'format_12': '{}{}'.format(datetime_obj.strftime('%b %d, %Y %I:%M'), meridian), 'format_24': datetime_obj.strftime('%b %d, %Y %H:%M')}

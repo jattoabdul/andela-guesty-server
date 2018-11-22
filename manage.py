@@ -17,6 +17,11 @@ def list_guests():
 	guest_controller = controllers.GuestController(request)
 	return guest_controller.list_guests()
 
+@app.route('/api/v1/data-export', methods=['GET'])
+def export_guest_data():
+	guest_controller = controllers.GuestController(request)
+	return guest_controller.export_data
+
 
 @app.route('/api/v1/guest', methods=['POST'])
 def new_guest():

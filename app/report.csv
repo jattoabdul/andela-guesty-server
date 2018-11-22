@@ -1,0 +1,21 @@
+id,group_size,guest_name,host_name,host_email,location,purpose,submit_tag,tag_no,time_in,time_in_iso,time_out,time_out_iso,created_at,updated_at
+16,1,f,Joseph Cobhams,joseph.cobhams@andela.com,,personal,True,,"Aug 08, 2018 08:35AM",2018-08-08 08:35:00,,,2018-08-08 10:43:17.767401,2018-08-08 10:43:17.767872
+12,1,Mandel Brook,Joseph Cobhams,joseph.cobhams@andela.com,,official,True,,"Jul 29, 2018 10:00AM",2018-07-29 10:00:00,,,2018-07-29 16:39:12.843111,2018-07-29 16:39:12.843433
+13,1,Mandel Brook,Joseph Cobhams,joseph.cobhams@andela.com,,official,True,,"Jul 29, 2018 10:00AM",2018-07-29 10:00:00,,,2018-07-29 16:42:44.006303,2018-07-29 16:42:44.006639
+15,1,f,Joseph Cobhams,joseph.cobhams@andela.com,,personal,True,,"Aug 08, 2018 08:35AM",2018-08-08 08:35:00,,,2018-08-08 10:42:10.798504,2018-08-08 10:42:10.799093
+17,1,Allen Group of Schools,Joseph Cobhams,joseph.cobhams@andela.com,,official,False,,"Aug 08, 2018 11:00AM",2018-08-08 11:00:00,,,2018-08-08 11:10:49.020920,2018-08-08 11:10:49.021210
+14,1,Mandel Brook,Joseph Cobhams,joseph.cobhams@andela.com,,official,True,,"Jul 29, 2018 10:00AM",2018-07-29 10:00:00,,,2018-07-29 16:43:28.553381,2018-07-29 16:43:28.553687
+7,1,Papito,Joseph Cobhams,joseph.cobhams@andela.com,,personal,False,,"Jul 29, 2018 06:59PM",2018-07-29 18:59:00,,,2018-07-29 16:25:34.882712,2018-07-29 16:25:34.882996
+6,1,Papito,Joseph Cobhams,joseph.cobhams@andela.com,,personal,False,,"Jul 29, 2018 06:59PM",2018-07-29 18:59:00,,,2018-07-29 16:21:56.690403,2018-07-29 16:21:56.690766
+5,1,Silas Onmbayugh,Joseph Cobhams,joseph.cobhams@andela.com,,official,False,,"Jul 29, 2018 01:45PM",2018-07-29 13:45:00,,,2018-07-29 16:21:56.690403,2018-07-29 16:21:56.690766
+4,1,Silas Onmbayugh,Joseph Cobhams,joseph.cobhams@andela.com,,personal,False,,"Jul 29, 2018 11:45AM",2018-07-29 11:45:00,,,2018-07-29 16:20:31.185282,2018-07-29 16:20:31.185573
+3,1,Silas Onmbayugh,Joseph Cobhams,joseph.cobhams@andela.com,,personal,False,,"Jul 29, 2018 04:10PM",2018-07-29 16:10:00,,,2018-07-29 16:18:39.201071,2018-07-29 16:18:39.201401
+18,100,McPherson Pharma,Joseph Cobhams,joseph.cobhams@andela.com,,official,True,,"Aug 08, 2018 11:00AM",2018-08-08 11:00:00,"Aug 08, 2018 03:30PM",2018-08-08 15:30:00,2018-08-08 11:15:10.553177,2018-08-08 11:30:47.546357
+1,1,Esther Iyomere,Joseph Cobhams,joseph.cobhams@andela.com,,Personal,True,AND-12298134,"Jul 26, 2018 11:24AM",2018-07-26 11:24:00,"Aug 08, 2018 03:30PM",2018-08-08 15:30:00,2018-07-26 21:02:23.828516,2018-08-08 11:30:47.546357
+10,1,Papito,Joseph Cobhams,joseph.cobhams@andela.com,,personal,False,,"Jul 29, 2018 06:59PM",2018-07-29 18:59:00,,,2018-07-29 16:34:28.310018,2018-07-29 16:34:28.310321
+9,1,Papito,Joseph Cobhams,joseph.cobhams@andela.com,,personal,False,,"Jul 29, 2018 06:59PM",2018-07-29 18:59:00,,,2018-07-29 16:29:53.843594,2018-07-29 16:29:53.843886
+8,1,Papito,Joseph Cobhams,joseph.cobhams@andela.com,,personal,False,,"Jul 29, 2018 06:59PM",2018-07-29 18:59:00,,,2018-07-29 16:28:27.913931,2018-07-29 16:28:27.914518
+2,1,Silas Onmbayugh,Jatto Ademola,jatto.ademola@andela.com,,Personal,False,,"Jul 26, 2018 05:24PM",2018-07-26 17:24:00,,,2018-07-26 22:00:29.741683,2018-07-26 22:00:29.741793
+11,1,Mandel Brook,Joseph Cobhams,joseph.cobhams@andela.com,,official,True,,"Jul 29, 2018 10:00AM",2018-07-29 10:00:00,,,2018-07-29 16:37:04.364893,2018-07-29 16:37:04.365187
+19,10,ME,Joseph Cobhams,joseph.cobhams@andela.com,lagos,personal,False,,"Aug 20, 2018 08:00AM",2018-08-20 08:00:00,,,2018-08-20 13:28:25.614706,2018-08-20 13:28:25.615009
+20,1,Jatto,Joseph Cobhams,joseph.cobhams@andela.com,new-york,official,False,,"Aug 20, 2018 08:00AM",2018-08-20 08:00:00,"Aug 20, 2018 09:35AM",2018-08-20 09:35:00,2018-08-20 13:31:15.672343,2018-08-20 13:31:15.672658

@@ -1,3 +1,6 @@
+import csv, os.path
+from flask import send_file
+from datetime import datetime
 from .base_controller import BaseController
 from app.repositories import GuestRepo
 from app.utils import timestring_to_datetime, time_format_12_24
@@ -108,3 +111,29 @@ class GuestController(BaseController):
 				'submit_tag': bool(guest.submit_tag),
 				'timestamps': self.prettify_response_dates(created_at=guest.created_at, updated_at=guest.updated_at)}
 			return self.handle_response(msg='OK', payload=payload)
+		
+	@property
+	def export_data(self):
+		all_guests = self.repo.all(paginate=False)
+		
+		file_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'report.csv')
+		file_name = '{}.csv'.format(datetime.now().strftime('%Y-%m-%d-%H%M'))
+		
+		with open(file_path, mode='w') as report:
+			fieldnames = ['id', 'group_size', 'guest_name', 'host_name', 'host_email', 'location', 'purpose',
+						  'submit_tag', 'tag_no', 'time_in','time_in_iso', 'time_out','time_out_iso',
+						  'created_at','updated_at']
+			report_writer = csv.DictWriter(report, fieldnames=fieldnames)
+			report_writer.writeheader()
+			
+			for guest in all_guests:
+				report_writer.writerow({'id':guest.id, 'group_size':guest.group_size, 'guest_name': guest.guest_name,
+										'host_name': guest.host_name, 'host_email': guest.host_email, 'location': guest.location,
+										'purpose': guest.purpose, 'submit_tag': bool(guest.submit_tag), 'tag_no': guest.tag_no,
+										'time_in': time_format_12_24(guest.time_in)['format_12'],
+										'time_in_iso': guest.time_in,
+										'time_out': time_format_12_24(guest.time_out)['format_12'],
+										'time_out_iso': guest.time_out, 'created_at': guest.created_at,
+										'updated_at': guest.updated_at })
+		
+		return send_file(file_path, as_attachment=True, attachment_filename=f'guesty-logs-{file_name}')
