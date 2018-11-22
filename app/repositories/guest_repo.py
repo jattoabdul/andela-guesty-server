@@ -19,7 +19,7 @@ class GuestRepo:
 	def all(paginate=True):
 		if paginate:
 			return Guest.query.paginate(error_out=False)
-		return Guest.query.all()
+		return Guest.query.order_by(Guest.id.desc()).all()
 	
 	@staticmethod
 	def list_guests(host_email=None):
